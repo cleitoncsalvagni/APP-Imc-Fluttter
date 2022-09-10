@@ -52,44 +52,45 @@ class _HomePageState extends State<Home> {
       drawer: Menu(context),
         body: Center(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                SizedBox(
-                  height: 100,
-                  width: 300,
+                Icon(
+                  Icons.accessibility_new,
+                  color: Colors.blue,
+                  size: 200.0,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 30.0),
                   child: TextField(
                     keyboardType: TextInputType.number,
                     controller: _inputControllerPeso,
-                    textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16
                     ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Peso (kg)'
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 300,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _inputControllerAlt,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 16
-                    ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Altura (cm)'
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        labelText: 'Digite seu peso (kg)'
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 50.0),
+                  padding: EdgeInsets.only(top: 30.0),
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _inputControllerAlt,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        labelText: 'Digite sua altura (cm)'
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 30.0),
                   child: Container(
                     width: 300,
-                    height: 50,
                     child: RaisedButton(
                       onPressed: _calcular,
                       child: Text('Calcular',style: TextStyle(color: Colors.white, fontSize: 25.0),),
@@ -100,7 +101,7 @@ class _HomePageState extends State<Home> {
                 Text(_info,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.black, fontSize: 15, height: 5),
-                )
+                ),
               ]
           ),
         )
