@@ -38,7 +38,15 @@ Widget Menu(BuildContext context){
               },
             ),
             ListTile(
-              title: Text("Sobre"),
+              title: Text("Calculadora"),
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => About()),);
+              },
+            ),
+            ListTile(
+              title: Text("Calculadora iOS"),
               onTap: (){
                 Navigator.push(
                   context,

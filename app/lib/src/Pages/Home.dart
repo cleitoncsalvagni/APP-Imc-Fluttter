@@ -11,32 +11,76 @@ class Home extends StatefulWidget {
 }
 
 class _HomePageState extends State<Home> {
-  final _inputControllerPeso = TextEditingController();
-  final _inputControllerAlt = TextEditingController();
+  final _inputControllerValor1 = TextEditingController();
+  final _inputControllerValor2 = TextEditingController();
 
-  String _info = "Informe seus dados.";
+  List<String> _list = [];
 
-  void _calcular(){
+  String resultado = '';
+
+  void _addItem(item) {
+      _list.add(item);
+  }
+
+  void _removeItem(index) {
+    _list.removeAt(index);
+    setState(() {
+      _list = _list;
+    });
+  }
+
+  void _clearList() {
+    setState(() {
+      _inputControllerValor1.clear();
+      _inputControllerValor2.clear();
+      _list.clear();
+      resultado = '0.00';
+    });
+}
+
+  void _adicao(){
     setState(()
     {
-      double peso = double.parse(_inputControllerPeso.text);
-      double alt = double.parse(_inputControllerAlt.text) / 100;
-      double imc = peso / ( alt * alt);
+      double valor1 = double.parse(_inputControllerValor1.text);
+      double valor2 = double.parse(_inputControllerValor2.text);
 
-      print(imc);
-      if(imc < 18.6){
-        _info = 'Abaixo do Peso (${imc.toStringAsPrecision(3)})';
-      } else if(imc >= 18.6 && imc < 24.9){
-        _info = 'Peso Ideal (${imc.toStringAsPrecision(3)})';
-      } else if(imc >= 24.9 && imc < 29.9){
-        _info = 'Levemente Acima do Peso (${imc.toStringAsPrecision(3)})';
-      } else if(imc >= 29.9 && imc < 34.9){
-        _info = 'Obesidade Grau I (${imc.toStringAsPrecision(3)})';
-      } else if(imc >= 34.9 && imc < 39.9){
-        _info = 'Obesidade Grau II (${imc.toStringAsPrecision(3)})';
-      } else if(imc >= 40){
-        _info = 'Obesidade Grau III (${imc.toStringAsPrecision(3)})';
-      }
+      double soma = valor1 + valor2;
+      resultado = soma.toString();
+      _addItem(resultado.toString());
+    });
+  }
+
+  void _subtracao() {
+    setState(()
+    {
+      double valor1 = double.parse(_inputControllerValor1.text);
+      double valor2 = double.parse(_inputControllerValor2.text);
+
+      double subtracao = valor1 - valor2;
+      resultado = subtracao.toString();
+      _addItem(resultado.toString());
+    });
+  }
+  void _multiplicacao() {
+    setState(()
+    {
+      double valor1 = double.parse(_inputControllerValor1.text);
+      double valor2 = double.parse(_inputControllerValor2.text);
+
+      double multiplicacao = valor1 * valor2;
+      resultado = multiplicacao.toString();
+      _addItem(resultado.toString());
+    });
+  }
+  void _divisao() {
+    setState(()
+    {
+      double valor1 = double.parse(_inputControllerValor1.text);
+      double valor2 = double.parse(_inputControllerValor2.text);
+
+      double divisao = valor1 / valor2;
+      resultado = divisao.toString();
+      _addItem(resultado.toString());
     });
   }
 
@@ -47,60 +91,160 @@ class _HomePageState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Calculadora de Imc"),
-      ),
+        title: Text("Calculadora Lista"),
+          actions: <Widget>[
+      Padding(
+      padding: EdgeInsets.only(right: 20.0),
+        child: GestureDetector(
+          onTap: _clearList,
+          child: Icon(
+            Icons.refresh,
+            size: 26.0,
+          ),
+        )
+    ),
+]
+    ),
       drawer: Menu(context),
-        body: Center(
+        body: SingleChildScrollView(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Icon(
-                  Icons.accessibility_new,
+                  Icons.calculate_outlined,
                   color: Colors.blue,
-                  size: 200.0,
+                  size: 150.0,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 30.0),
                   child: TextField(
+                    controller: _inputControllerValor1,
                     keyboardType: TextInputType.number,
-                    controller: _inputControllerPeso,
                     style: TextStyle(
                         fontSize: 16
                     ),
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        labelText: 'Digite seu peso (kg)'
+                    decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.add_circle),
+                        labelText: 'Digite um numero'
                     ),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 30.0),
                   child: TextField(
+                    controller: _inputControllerValor2,
                     keyboardType: TextInputType.number,
-                    controller: _inputControllerAlt,
+
                     style: TextStyle(
                         fontSize: 16
                     ),
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        labelText: 'Digite sua altura (cm)'
+                    decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.add_circle),
+                        labelText: 'Digite um numero'
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 30.0),
-                  child: Container(
-                    width: 300,
-                    child: RaisedButton(
-                      onPressed: _calcular,
-                      child: Text('Calcular',style: TextStyle(color: Colors.white, fontSize: 25.0),),
-                      color: Colors.blue,
-                    ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 5.0),
+                        child: Container(
+                          child: RaisedButton(
+                            onPressed: _adicao,
+                            child: Text(
+                              '+',
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 5.0),
+                        child: Container(
+                          child: RaisedButton(
+                            onPressed: _subtracao,
+                            child: Text(
+                              '-',
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 5.0),
+                        child: Container(
+                          child: RaisedButton(
+                            onPressed: _multiplicacao,
+                            child: Text(
+                              '*',
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 5.0),
+                        child: Container(
+                          child: RaisedButton(
+                            onPressed: _divisao,
+                            child: Text(
+                              '/',
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                ),
+                Text(
+                  '$resultado',
+                  style: TextStyle(
+                    fontSize: 30,
                   ),
                 ),
-                Text(_info,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 15, height: 5),
+                SizedBox(
+                  height: 500,
+                  child: ListView.builder(
+                    itemCount: _list.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                          onTap: () => _removeItem(index),
+                          child: Container(
+                            color: Colors.blue,
+                            margin: EdgeInsets.all(15),
+                            padding: EdgeInsets.all(15),
+                            alignment: Alignment.center,
+                            child: Text(
+                              '${index + 1} - ${_list[index]}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          )
+                      );
+                    },
+                  ),
                 ),
               ]
           ),
