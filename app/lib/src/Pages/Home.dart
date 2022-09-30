@@ -124,7 +124,7 @@ class _HomePageState extends State<Home> {
                     ),
                     decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.add_circle),
-                        labelText: 'Digite um numero'
+                        labelText: 'Digite um numerwo'
                     ),
                   ),
                 ),

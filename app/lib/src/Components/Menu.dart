@@ -1,6 +1,7 @@
 import 'package:app/src/Pages/About.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/Pages/Home.dart';
+import 'package:app/src/Pages/Calculator.dart';
 
 Widget Menu(BuildContext context){
   return Drawer(
@@ -42,7 +43,7 @@ Widget Menu(BuildContext context){
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => About()),);
+                  MaterialPageRoute(builder: (context) => Calculator()),);
               },
             ),
             ListTile(
